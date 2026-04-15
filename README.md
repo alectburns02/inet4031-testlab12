@@ -6,45 +6,43 @@ This lab introduces Docker and Docker Compose by having you containerize a
 real, multi-service application. You will package three components: Apache,
 Flask, and MariaDB. These will be packaged into separate containers and wired together so they function as a complete application.
 
-The application code and scaffolding are provided. Your job is to complete the Dockerfiles, verify the stack runs correctly, and document your work below.
-
-> **Directions and explanations for this lab are on the repository Wiki.**
-> Refer to the Wiki pages for step-by-step instructions.
-
----
-
-*The sections below are for you to fill out. Replace each placeholder with your own content before submitting. Having a detailed README is the best practice for showing your work in future GitHub repositories.*
-
----
+The application code and scaffolding are provided.
 
 # Project Overview
 
-<!-- Briefly describe what this application does in your own words.
-     What problem does it solve? What does a user interact with? -->
+This project packages a three tier web app into Docker containers. The user interacts with Apache on port 80 that forwards requests to Flask. Flask processes the user request, communicates with MariaDB for the appropriate data, and returns the results to the user through apache. The lab demonstrates containerizing services, using docker compose to orchestrate multi service applications, understanding health checkups, and networking between containers using service names rather than hard coded ip adresses.
 
 # Prerequisites
 
-<!-- List what needs to be installed or configured on the VM before this lab
-     will work. Include Docker, Docker Compose, and anything else required. -->
+Before running the stack, the VM must have Docker and Docker Compose installed, along with a user created .env file for the database credentials.
 
 # Getting Started
-
-<!-- Explain how a new teammate would bring this stack up from a fresh clone.
-     Walk through every command they need to run, in order. -->
+To bring the stack from a fresh clone, clone this repo, then navigate into it, create a .env file, build and start the containers using docker compose up --build, access the application through a browser with your ip address, stop the stack with docker compose down, and fully reset the database with docker compose down -v.
 
 # Configuration
 
-<!-- Explain the .env file: what it is, what variables it contains,
-     and what a teammate needs to provide that is not in this repository. -->
+This project uses a .env file to store sensitive password information that should not be committed to Git. the .env file must define the:
+DB_ROOT_PASSWORD=Fill in this part
+DB_NAME=ticketdb
+DB_USER=flaskuser
+DB_PASSWORD= Fill in this part
+and should be ignored with a .gitignore
 
 # Verification
+Manual verification:
+To verify the stack is running correctly, do a health check using docker compose ps to see that db and app are healthy and that web is running.
 
-<!-- Describe how to confirm the stack is running correctly.
-     Reference the check script and what a passing run looks like. -->
+Automatic verification:
+Lastly the check-lab script can be run by making it executable and then running it to see if pass or fail is provided. curl http://localhost:80/ should return html, curl http://localhost:80/health should return {"database": "connected","status": "healthy"}, and curl http://localhost:80/api/tickets should return a JSON array with tickets. Also 
+curl -X POST http://localhost:80/api/tickets \
+  -H "Content-Type: application/json" \
+  -d '{"title": "My first ticket", "description": "Testing the API"}'
+  Can be used to add a ticket.
+  Data persistence can be checked by stopping the db with docker compose stop db, then docker compose start db, wait a couple of seconds, then try curl http://localhost:80/api/tickets for another JSON array.
 
 # Feedback (Optional)
+No feedback but the lab was interesting to work on.
 
-<!-- Do you have any feedback you would like to give us after completing this lab? What are some things you enjoyed? What about others that you felt was lackluster? Or maybe there was something that we missed that you'd love for us to touch on! This will help us improve the INET 4031 lab experience. We appreciate everything we can get!  -->
 =======
 # inet4031-testlab12
 >>>>>>> 787a516b19363f30ce52b49da5c8df0c4271e7d2
