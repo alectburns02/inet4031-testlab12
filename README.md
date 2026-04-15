@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Docker Lab: Containerizing a Three-Tier Application
 **INET 4031 - Introductions to Systems**
 
@@ -44,3 +45,6 @@ The application code and scaffolding are provided. Your job is to complete the D
 # Feedback (Optional)
 
 <!-- Do you have any feedback you would like to give us after completing this lab? What are some things you enjoyed? What about others that you felt was lackluster? Or maybe there was something that we missed that you'd love for us to touch on! This will help us improve the INET 4031 lab experience. We appreciate everything we can get!  -->
+=======
+# inet4031-testlab12
+>>>>>>> 787a516b19363f30ce52b49da5c8df0c4271e7d2
